@@ -20,7 +20,8 @@ const getCurrentBranch = async () => {
     'branch',
     '--show-current'
   ]
-  return await execa('git', cmdArgs)
+  const { stdout } = await execa('git', cmdArgs)
+  return stdout
 }
 
 const checkoutTo = async (targetBranch: string) => {
@@ -50,10 +51,10 @@ const mergeTo = async (targetBranch: string) => {
     const output : Output = {
       messages: []
     }
-    const currentBranch = getCurrentBranch()
+    const currentBranch = await getCurrentBranch()
 
     output.messages.push(
-      chalk.blue(`Merging ${currentBranch} to ${targetBranch}`)
+      `Merging ${currentBranch} to ${targetBranch}`
     )
 
     await validateTargetBranch(targetBranch)
