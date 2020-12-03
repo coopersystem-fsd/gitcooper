@@ -1,6 +1,5 @@
 import chalk from 'chalk'
 import execa from 'execa'
-import { STATUS_CODES } from 'http'
 
 const validateTargetBranch = async (targetBranch) => {
   const cmdArgs = [
@@ -15,13 +14,17 @@ const validateTargetBranch = async (targetBranch) => {
   throw new Error('Target branch not found!');
 }
 
+const exec = async (cmd, args) => {
+  const { stdout } = await execa(cmd, args)
+  return stdout
+}
+
 const getCurrentBranch = async () => {
   const cmdArgs = [
     'branch',
     '--show-current'
   ]
-  const { stdout } = await execa('git', cmdArgs)
-  return stdout
+  return exec('git', cmdArgs)
 }
 
 const checkoutTo = async (targetBranch: string) => {
@@ -29,7 +32,7 @@ const checkoutTo = async (targetBranch: string) => {
     'checkout',
     targetBranch
   ]
-  await execa('git', cmdArgs)
+  return exec('git', cmdArgs)
 }
 
 const pull = async (targetBranch: string) => {
@@ -38,8 +41,15 @@ const pull = async (targetBranch: string) => {
     'origin',
     targetBranch
   ]
-  const { stdout } = await execa('git', cmdArgs)
-  return stdout
+  return exec('git', cmdArgs)
+}
+
+const merge = async (fromBranch: string) => {
+  const cmdArgs = [
+    'merge',
+    `origin/${fromBranch}`
+  ]
+  return exec('git', cmdArgs)
 }
 
 interface Output {
@@ -58,13 +68,17 @@ const mergeTo = async (targetBranch: string) => {
     )
 
     await validateTargetBranch(targetBranch)
+
     await checkoutTo(targetBranch)
+
     const pullStdout = await pull(targetBranch)
     output.messages.push(pullStdout)
 
-
+    const mergeStdout = await merge(currentBranch)
+    output.messages.push(mergeStdout)
 
     console.log(output.messages)
+
   } catch(error) {
     const coloredMessage = chalk.red(error)
     console.log(coloredMessage)
