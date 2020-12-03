@@ -15,6 +15,14 @@ const validateTargetBranch = async (targetBranch) => {
   throw new Error('Target branch not found!');
 }
 
+const getCurrentBranch = async () => {
+  const cmdArgs = [
+    'branch',
+    '--show-current'
+  ]
+  return await execa('git', cmdArgs)
+}
+
 const checkoutTo = async (targetBranch: string) => {
   const cmdArgs = [
     'checkout',
@@ -42,6 +50,12 @@ const mergeTo = async (targetBranch: string) => {
     const output : Output = {
       messages: []
     }
+    const currentBranch = getCurrentBranch()
+
+    output.messages.push(
+      chalk.blue(`Merging ${currentBranch} to ${targetBranch}`)
+    )
+
     await validateTargetBranch(targetBranch)
     await checkoutTo(targetBranch)
     const pullStdout = await pull(targetBranch)
