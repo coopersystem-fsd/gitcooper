@@ -13,11 +13,12 @@ const cli = meow(
   Usage
     $ gitcooper
   Options
-    --config, -g     Setup gitcooper-cli preferences.
+    --config, -g    Setup gitcooper-cli preferences.
     --commit, -c    Interactively commit using the prompts
     --coAuthors,    Show option to add Co-Authors on commit. Works only with --commmit option
     --refs,         Show option to add issue on commit. Works only with --commmit option
     --timeEntry,    Create a time entry registry on redmine
+    --mergeTo, -m   Merge current branch to the specified
     --changeStatus  Show options to change issue status after commit
     --list, -l      List all the available gitmojis
     --search, -s    Search gitmojis
@@ -38,6 +39,7 @@ const cli = meow(
       coAuthors: { type: 'boolean' },
       refs: { type: 'boolean' },
       timeEntry: { type: 'boolean' },
+      mergeTo: { type: 'boolean', alias: 'm' },
       changeStatus: { type: 'boolean' },
       sandbox: { type: 'boolean' }
     }
@@ -46,6 +48,7 @@ const cli = meow(
 
 export const options = {
   commit: () => commands.commit('client', cli.flags),
+  mergeTo: () => cli.input.map(input => commands.mergeTo(input)),
   config: () => commands.config(),
   hook: () => commands.commit('hook'),
   init: () => commands.createHook(),

@@ -16,15 +16,18 @@ const config = () => {
     configurationVault.setScopePrompt(
       answers[CONFIGURATION_PROMPT_NAMES.SCOPE_PROMPT]
     ),
-      configurationVault.setContacts(
-        answers[CONFIGURATION_PROMPT_NAMES.CONTACTS]
-      ),
-      configurationVault.setLdapUsername(
-        answers[CONFIGURATION_PROMPT_NAMES.LDAP_USERNAME]
-      ),
-      configurationVault.setLdapPassword(
-        answers[CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD]
-      )
+    configurationVault.setContacts(
+      answers[CONFIGURATION_PROMPT_NAMES.CONTACTS]
+    ),
+    configurationVault.setLdapUsername(
+      answers[CONFIGURATION_PROMPT_NAMES.LDAP_USERNAME]
+    ),
+    configurationVault.setLdapPassword(
+      answers[CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD]
+    ),
+    configurationVault.setSyncCommit(
+      answers[CONFIGURATION_PROMPT_NAMES.SYNC_COMMIT]
+    )
   })
 }
 
