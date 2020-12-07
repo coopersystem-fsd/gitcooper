@@ -6,8 +6,14 @@ import prompts from './prompts'
 import withHook, { registerHookInterruptionHandler } from './withHook'
 import withClient from './withClient'
 import { type Options } from './prompts'
+import configurationVault from '../../utils/configurationVault'
+import sync from './sync'
 
-const commit = (mode: 'client' | 'hook', options: Options) => {
+const commit = async (mode: 'client' | 'hook', options: Options) => {
+  if(configurationVault.getSyncCommit()) {
+    await sync()
+  }
+
   if (mode === 'hook') registerHookInterruptionHandler()
 
   return getEmojis()

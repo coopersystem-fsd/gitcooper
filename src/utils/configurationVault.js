@@ -36,6 +36,10 @@ const setLdapPassword = (password: string) => {
   config.set(CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD, password)
 }
 
+const setSyncCommit = (sync: boolean) => {
+  config.set(CONFIGURATION_PROMPT_NAMES.SYNC_COMMIT, sync)
+}
+
 const getAutoAdd = (): boolean => {
   return config.get(CONFIGURATION_PROMPT_NAMES.AUTO_ADD) || false
 }
@@ -67,6 +71,10 @@ const getLdapPassword = (): string => {
   return config.get(CONFIGURATION_PROMPT_NAMES.LDAP_PASSWORD) || ''
 }
 
+const getSyncCommit = () : boolean => {
+  return config.get(CONFIGURATION_PROMPT_NAMES.SYNC_COMMIT) || false
+}
+
 export default {
   getAutoAdd,
   getContacts,
@@ -75,11 +83,13 @@ export default {
   getSignedCommit,
   getLdapPassword,
   getLdapUsername,
+  getSyncCommit,
   setAutoAdd,
   setContacts,
   setEmojiFormat,
   setScopePrompt,
   setSignedCommit,
   setLdapPassword,
-  setLdapUsername
+  setLdapUsername,
+  setSyncCommit
 }

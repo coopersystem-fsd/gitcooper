@@ -14,12 +14,12 @@ const validateTargetBranch = async (targetBranch) => {
   throw new Error('Target branch not found!');
 }
 
-const exec = async (cmd, args) => {
+export const exec = async (cmd, args) => {
   const { stdout } = await execa(cmd, args)
   return stdout
 }
 
-const getCurrentBranch = async () => {
+export const getCurrentBranch = async () => {
   const cmdArgs = [
     'branch',
     '--show-current'

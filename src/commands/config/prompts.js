@@ -8,7 +8,8 @@ export const CONFIGURATION_PROMPT_NAMES = {
   SCOPE_PROMPT: 'scopePrompt',
   SIGNED_COMMIT: 'signedCommit',
   LDAP_USERNAME: 'ldapUsername',
-  LDAP_PASSWORD: 'ldapPassword'
+  LDAP_PASSWORD: 'ldapPassword',
+  SYNC_COMMIT: 'syncCommits'
 }
 
 export const EMOJI_COMMIT_FORMATS = {
@@ -63,5 +64,11 @@ export default () => [
     message: 'Enable scope prompt',
     type: 'confirm',
     default: configurationVault.getScopePrompt()
+  },
+  {
+    name: CONFIGURATION_PROMPT_NAMES.SYNC_COMMIT,
+    message: 'Syncronize branch before commits',
+    type: 'confirm',
+    default: configurationVault.getSyncCommit()
   }
 ]
